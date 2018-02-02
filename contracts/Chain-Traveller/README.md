@@ -1,8 +1,8 @@
-#Chain Traveller Contract V1.0
+# Chain Traveller Contract V1.0
 
-This smart contract allows to to track trips in time. Moreover, it allows users to specify what is the planned trip and what is the actual trip performed.
+This smart contract allows to track trips in time. Moreover, it allows users to specify what is the planned trip and what is the actual trip performed.
 
-#Gas consumption:
+# Gas consumption:
 Note: For this test, we use:
 - For values representing time: 0
 - For strings: "x"
