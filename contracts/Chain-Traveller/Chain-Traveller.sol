@@ -36,7 +36,7 @@ contract ChainTraveller {
     mapping(address=>uint) private addr_trips_counter; 
     //Count the number of addresses having one or more trips
     uint trips_counter;
-   function chainTravaller() public {
+   function ChainTraveller() public {
        administrator = msg.sender;
        trips_counter = 0;
    }
@@ -83,6 +83,42 @@ contract ChainTraveller {
         trips[msg.sender][tripNumber].planned.stages[stageNumber].originTime,
         trips[msg.sender][tripNumber].planned.stages[stageNumber].destination,
         trips[msg.sender][tripNumber].planned.stages[stageNumber].destinationTime);
+   }
+
+    function createActualTrip(uint tripNumber, string orn, uint oTime, string dest, uint dTime) public {
+       require(tripNumber <= addr_trips_counter[msg.sender]);
+       trips[msg.sender][tripNumber].actual.origin = orn;
+       trips[msg.sender][tripNumber].actual.originTime = oTime;
+       trips[msg.sender][tripNumber].actual.destination = dest;
+       trips[msg.sender][tripNumber].actual.destinationTime = dTime;
+   }
+
+   function getActualTripInfo(uint tripNumber) public constant returns (string, uint, string, uint, uint) {
+        require(tripNumber <= addr_trips_counter[msg.sender]);
+        return (trips[msg.sender][tripNumber].actual.origin, 
+        trips[msg.sender][tripNumber].actual.originTime, 
+        trips[msg.sender][tripNumber].actual.destination,
+        trips[msg.sender][tripNumber].actual.destinationTime,
+        trips[msg.sender][tripNumber].actual.stagesCounter);
+   }
+
+   function addStageToActualTrip(uint tripNumber, string orn, uint oTime, string dest, uint dTime) public {
+       require(tripNumber <= addr_trips_counter[msg.sender]);
+       uint tempStagesCounter = trips[msg.sender][tripNumber].actual.stagesCounter;
+        trips[msg.sender][tripNumber].actual.stages[tempStagesCounter].origin = orn;
+        trips[msg.sender][tripNumber].actual.stages[tempStagesCounter].originTime = oTime;
+        trips[msg.sender][tripNumber].actual.stages[tempStagesCounter].destination = dest;
+        trips[msg.sender][tripNumber].actual.stages[tempStagesCounter].destinationTime = dTime;
+        trips[msg.sender][tripNumber].actual.stagesCounter++;
+   }
+
+   function getStageFromActualTrip(uint tripNumber, uint stageNumber) public constant returns(string, uint, string, uint) {
+        require(tripNumber <= addr_trips_counter[msg.sender]);
+        require(stageNumber <= trips[msg.sender][tripNumber].actual.stagesCounter);
+        return (trips[msg.sender][tripNumber].actual.stages[stageNumber].origin,
+        trips[msg.sender][tripNumber].actual.stages[stageNumber].originTime,
+        trips[msg.sender][tripNumber].actual.stages[stageNumber].destination,
+        trips[msg.sender][tripNumber].actual.stages[stageNumber].destinationTime);
    }
 
 }
