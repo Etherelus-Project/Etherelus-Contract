@@ -1,2 +1,4 @@
-# Etherelus-Contract
-Smart contracts developed by the Etherelus-Project
+# Etherelus-Contracts
+
+The purpose of this repository is to provide optimized Ethereum Smart Contracts.
+
