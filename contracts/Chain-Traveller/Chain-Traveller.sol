@@ -36,8 +36,8 @@ contract ChainTraveller {
     mapping(address=>uint) private addr_trips_counter; 
     //Count the number of addresses having one or more trips
     uint trips_counter;
-   function chainTravaller(address admin) public {
-       administrator = admin;
+   function chainTravaller() public {
+       administrator = msg.sender;
        trips_counter = 0;
    }
 
@@ -46,6 +46,34 @@ contract ChainTraveller {
         PlannedTrip memory planned = PlannedTrip("",0,"",0,0);
         ActualTrip memory actual = ActualTrip("",0,"",0,0);
         trips[msg.sender][addr_trips_counter[msg.sender]] = Trip(planned, actual);
+        trips_counter++;
+   }
+
+   function createPlannedTrip(uint tripNumber, string orn, uint oTime, string dest, uint dTime) public {
+       require(tripNumber <= addr_trips_counter[msg.sender]);
+       trips[msg.sender][tripNumber].planned.origin = orn;
+       trips[msg.sender][tripNumber].planned.originTime = oTime;
+       trips[msg.sender][tripNumber].planned.destination = dest;
+       trips[msg.sender][tripNumber].planned.destinationTime = dTime;
+   }
+
+   function getPlannedTripInfo(uint tripNumber) public constant returns (string, uint, string, uint, uint) {
+        require(tripNumber <= addr_trips_counter[msg.sender]);
+        return (trips[msg.sender][tripNumber].planned.origin, 
+        trips[msg.sender][tripNumber].planned.originTime, 
+        trips[msg.sender][tripNumber].planned.destination,
+        trips[msg.sender][tripNumber].planned.destinationTime,
+        trips[msg.sender][tripNumber].planned.stagesCounter);
+   }
+
+   function addStageToPlannedTrip(uint tripNumber, string orn, uint oTime, string dest, uint dTime) public {
+       require(tripNumber <= addr_trips_counter[msg.sender]);
+       uint tempStagesCounter = trips[msg.sender][tripNumber].planned.stagesCounter;
+        trips[msg.sender][tripNumber].planned.stages[tempStagesCounter].origin = orn;
+        trips[msg.sender][tripNumber].planned.stages[tempStagesCounter].originTime = oTime;
+        trips[msg.sender][tripNumber].planned.stages[tempStagesCounter].destination = dest;
+        trips[msg.sender][tripNumber].planned.stages[tempStagesCounter].destinationTime = dTime;
+        trips[msg.sender][tripNumber].planned.stagesCounter++;
    }
 
 }
