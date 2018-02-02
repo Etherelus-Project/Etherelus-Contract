@@ -76,4 +76,13 @@ contract ChainTraveller {
         trips[msg.sender][tripNumber].planned.stagesCounter++;
    }
 
+   function getStageFromPlannedTrip(uint tripNumber, uint stageNumber) public constant returns(string, uint, string, uint) {
+        require(tripNumber <= addr_trips_counter[msg.sender]);
+        require(stageNumber <= trips[msg.sender][tripNumber].planned.stagesCounter);
+        return (trips[msg.sender][tripNumber].planned.stages[stageNumber].origin,
+        trips[msg.sender][tripNumber].planned.stages[stageNumber].originTime,
+        trips[msg.sender][tripNumber].planned.stages[stageNumber].destination,
+        trips[msg.sender][tripNumber].planned.stages[stageNumber].destinationTime);
+   }
+
 }
