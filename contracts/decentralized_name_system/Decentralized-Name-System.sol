@@ -33,7 +33,7 @@ contract DecentralizedNameSystem {
         _;
     }
 
-    function removeSystem(string key) public canDeleteSystem {
+    function removeSystem(string key) public canDeleteSystem(key) {
         RemoveSystem(key, domains[key].value, msg.sender);
         delete domains[key];
     }
@@ -41,7 +41,5 @@ contract DecentralizedNameSystem {
     function resolve(string key) public constant returns(string) {
         return(domains[key].value);
     }
-
-
 
 }
