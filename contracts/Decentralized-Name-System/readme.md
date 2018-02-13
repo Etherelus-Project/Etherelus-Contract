@@ -2,6 +2,7 @@
 
 This simple smart contract allows user to know the real value of a key.
 A simple example is for identity: If someone wants peopl to be able to know its name, this someone can link its ethereum address to it:
+
 `0x0000000...000 => John Smith`
 
 # Gas consumption:
