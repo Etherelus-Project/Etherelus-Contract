@@ -1,5 +1,5 @@
 // Written by Florian Castelain <castelainflorian44@gmail.com> for the Etherelus-Project
-// Version WIP
+// Version 1.0
 pragma solidity ^0.4.18;
 contract DecentralizedNameSystem {
 
